@@ -177,4 +177,3 @@ Press '3' for full class.\n")
     
 vidcap.release()
 cv2.destroyAllWindows()
-
