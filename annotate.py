@@ -20,27 +20,26 @@ warnings.filterwarnings("ignore")
 #####################################################################
 #               Create a GUI for instruction                        #
 #####################################################################
-instwin = gui("Instruction Window", "800x700") 
+instwin = gui("Açıklama", "800x700") 
 instwin.setFont(18)
-instwin.addLabel("title","Instruction\n\n\
-Please follow the instruction in order to label frames:\n\n\
-After closing this window you will be asked to browse\n\
-a video file and enter the interval between frames in\n\
-seconds.\n\n\
-In the Input window browse and select a video.\n\
-Then, enter the seconds (default = 60) and press Submit.\n\n\
-Afterwards, you will be shown frames. In order to label\n\
-frames with corresponding class, press the following\n\
-keys as stated beolow.\n\n\
-Press '1' for empty class.\n\
-Press '2' for half class.\n\
-Press '3' for full class.\n\n")
+instwin.addLabel("title","Kullanım Kılavuzu.\n\n\
+Görüntüleri etiketlemek için lütfen talimatları takip ediniz:\n\n\
+Bu pencereği kapattıktan sonra, açılan yeni pencere'de\n\
+sizden bir video dosyası adresi ve kaç saniye aralıklarla\n\
+video frame'lerini görüntülemek istediğiniz sorulacaktır.\n\n\
+Açılan pencerede 'Browse' tuşuna basın ve video dosyasın seçiniz.\n\
+Sonra, saniye bilgisini girip ve 'Onay' tuşuna basınız.\n\n\
+Yeni açılan pencerede, size frame'ler gösterilecektir. Frame'leri\n\
+etiketlemek için aşağıda belirtilen klavyedeki tuşlara basınız.\n\n\
+Boş olarak etiketlemek için '1'e basın.\n\
+Orta olarak etiketlemek için '2'e basın.\n\
+Dolu olarak etiketlemek için '3'e basın.\n\n")
 
 def ok(button):
-    if button == "Ok":
+    if button == "Tamam":
         instwin.stop()
 
-instwin.addButtons(["Ok"], ok)
+instwin.addButtons(["Tamam"], ok)
 
 instwin.go()
 
@@ -53,24 +52,24 @@ def press(button):
     if button == "Browse":
         global videoFile
         videoFile = tkFileDialog.askopenfilename()
-        pathwin.setEntry("Path", videoFile)
-    elif button == "Submit":
+        pathwin.setEntry("Adres", videoFile)
+    elif button == "Onay":
         global seconds
-        seconds = int(pathwin.getEntry("Seconds"))
+        seconds = int(pathwin.getEntry("Saniye"))
         pathwin.stop()
 
 
-pathwin = gui("Input Window", "600x400")
+pathwin = gui("Bilgiler", "600x400")
 pathwin.setFont(18)
-pathwin.addLabel("title","Please select video file.")
-pathwin.addLabelEntry("Path")
+pathwin.addLabel("title","Video dosyasının tam adresini giriniz.")
+pathwin.addLabelEntry("Adres")
 pathwin.addButtons(["Browse"], press)
-pathwin.addLabelEntry("Seconds")
-pathwin.setEntry("Seconds",60)
-pathwin.setFocus("Path")
+pathwin.addLabelEntry("Saniye")
+pathwin.setEntry("Saniye",60)
+pathwin.setFocus("Adres")
 
        
-pathwin.addButtons(["Submit"], press)
+pathwin.addButtons(["Onay"], press)
 pathwin.go()
 
 #####################################################################
@@ -83,13 +82,13 @@ vidcap = cv2.VideoCapture(videoFile)
 
 # Check if the VideoCapture is opened successfully
 if vidcap.isOpened() == False:
-    app = gui("Error Window", "600x400")
+    app = gui("Variables Window", "600x400")
     app.setFont(18)
-    app.addLabel("title","File cannot be opened!")
+    app.addLabel("title","Dosya açılmıyor! Tekrar deneyin.")
     def ok(button):
-        if button == "Ok":
+        if button == "Tamam":
             app.stop()
-        app.addButtons(["Ok"], ok)
+        app.addButtons(["Tamam"], ok)
         app.go()
 
 
@@ -105,8 +104,9 @@ nframes = int(vidcap.get(cv2.CAP_PROP_FRAME_COUNT))
 # Gets number of frames per second
 fps = int(vidcap.get(cv2.CAP_PROP_FPS))
 print (fps)
-# Makes directories for labeld images (frames)
-dirlist = ['Empty', 'Half', 'Full']
+
+# Makes data directories for labeld images (frames)
+dirlist = ['Bos', 'Orta', 'Dolu']
 
 # Checks if the directories exist
 for d in dirlist:
@@ -141,27 +141,27 @@ while (vidcap.isOpened) and (frameId < nframes):
     
     # Label the images and save them to specific folder
     if (k == 49) or (k == 177): # Press 1 to save frame in empty class
-        path = 'data/Empty/'
+        path = 'data/Bos/'
         cv2.imwrite(os.path.join(path, prefix+'Frame_'+str(frameId)+'.jpg'), frame)
     elif (k == 50) or (k == 178): # Press 2 to save frame in half class
-        path = 'data/Half/'
+        path = 'data/Orta/'
         cv2.imwrite(os.path.join(path, prefix+'Frame_'+str(frameId)+'.jpg'), frame)
     elif (k == 51) or (k == 179): # Press 3 to save frame in full class
-        path = 'data/Full/'
+        path = 'data/Dolu/'
         cv2.imwrite(os.path.join(path, prefix+'Frame_'+str(frameId)+'.jpg'), frame)
     else:
-        app = gui("Warning Window", "600x400")
+        app = gui("Variables Window", "600x400")
         app.setFont(18)
-        app.addLabel("title","Please press following keys:\n\
-Press '1' for empty class.\n\
-Press '2' for half class.\n\
-Press '3' for full class.\n")
+        app.addLabel("title","Lütfen aşağıdakı tuşlara basınız:\n\
+Boş olarak etiketlemek için '1'e basın.\n\
+Orta olarak etiketlemek için '2'e basın.\n\
+Dolu olarak etiketlemek için '3'e basın.")
 
         def ok(button):
-            if button == "Ok":
+            if button == "Tamam":
                 app.stop()
 
-        app.addButtons(["Ok"], ok)
+        app.addButtons(["Tamam"], ok)
         app.go()
 
         # 
@@ -177,4 +177,3 @@ Press '3' for full class.\n")
     
 vidcap.release()
 cv2.destroyAllWindows()
-
