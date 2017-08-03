@@ -1,10 +1,193 @@
-# Simple Video Annotation Tool
+# Video Etiketleme Arayüzü
 
-This is a script to label the Scene in a Video based on the crowed density level. You can label the scene into 3 level, Empty, Half, and Full. In order to run this script we need to install OpenCV library on our system. Please follow the installation guide for your system.
+Video etiketleme arayüzünü kullanarak video sahnelerini yoğunluğa dayalı etikleye bilirsiniz. Arayüzü kullanarak sahneleri 3 yoğunluk seviyesinde etikleye bilirsiniz. Arayüzü bilgisayarınızda çalıştırmak için önce gereken kütüphaneleri kurmanız gerekiyor. OpenCV kütüphanesin kurmak için, aşağıda Windows ve Ubuntu işletim sistemleri için yazılmış kılavuza bakınız.
 
-# How to run script
+# Video Etiketleme Arayüzünü nasıl kullanırım
 
-We assume that you install OpenCV and are ready to run the script. In ordor to download click <a href="https://github.com/ImOmid/SceneDensity/archive/master.zip" target="_blank">here</a>. Unzip the file and navigate into SceneDensity directory. 
+OpenCv kütüphanesini henüz kurmadıysanız işletim sisteminizle bağlı bölüme gidiniz, aksı takdirde devam ediniz. Video Etiketleme Arayüzü indirmek için <a href="https://github.com/ImOmid/SceneDensity/archive/tr.zip" target="_blank">tıklayın</a>. İndirilen dosyanı ziplemeden çıkarın ve  SceneDensity-tr klasörüne giriniz (annotate.py dosyanın olduğu klasörde olduğunuzdan emin olunuz).
+
+## Windows işletim sistemi
+
+
+Command prompt açınız ve 'cd' komutunu kullanarak SceneDensity-tr dosyasına giriniz.
+
+Örneğim eğer SceneDensity-tr klasörü Downloads dosyasındaysa aşağıdakı komutu giriniz.
+
+```sh
+cd Dowsnloads\SceneDensity-tr 
+```
+Doğru dosyanın içinde olduğunuzda dir komutunu yazdığınızda aşağıdakı resimdeki gibi annotate.py ve diğer dosyaları göreceksiniz.
+
+![](cmd.png?raw=true)
+
+Şimdi arayüzü command prompt'da çalıştıra bilirsiniz.
+
+## In Ubuntu 16.04
+
+Terminal SceneDensity-tr klasörü içinde açınız, ve aşağıdakı komutu girerek sanal ortamı etkinleştiriniz. 
+
+```sh
+workon OpenCV
+```
+
+Şimdi arayüzü command prompt'da çalıştıra bilirsiniz.
+
+
+# Arayüzü nasıl çalıştırırım
+
+Arayüzü çalıştırmak için aşağıdakı komutu giriniz. Video sahnelerin nasıl etiketleyeceğinizi programın açıklamasında göreceksiniz.
+
+```sh
+python annotate.py
+```
+
+
+
+# Install OpenCV on Ubuntu 10 Windows
+
+
+## Download and install dependencies
+
+1. Download and install Visual Studio and CMake.
+
+1.1. [Visual Studio 2012](http://go.microsoft.com/?linkid=9816768)<br/> 
+1.2. [CMake](http://www.cmake.org/files/v2.8/cmake-2.8.11.2-win32-x86.exe)<br/>
+
+2. Download and install necessary Python, and Numpy to their default locations.
+
+2.1. [Python 2.7.x](https://www.python.org/ftp/python/2.7.13/python-2.7.13.amd64.msi)<br/>
+2.1. [Numpy](http://sourceforge.net/projects/numpy/files/NumPy/1.7.1/numpy-1.7.1-win32-superpack-python2.7.exe/download)<br/>
+
+
+## Download and extract OpenCV and OpenCV_contrib
+
+Download <a href="https://github.com/opencv/opencv/archive/master.zip" target="_blank">OpenCV</a><br/>
+
+Download <a href="https://github.com/opencv/opencv_contrib/archive/master.zip" target="_blank">OpenCV_contrib</a><br/>
+
+Extract both zip files into:
+```sh
+C:\OpenCV\sources\
+```
+and create a build directory in:
+```sh
+C:\OpenCV\
+```
+
+
+## Configure and Generate
+
+Run CMake as administrator
+
+### Configure OpenCV
+
+#### Browse the source code and build directories as follows.
+
+Where is the source code:
+```sh
+C:\OOpenCV\sources\opencv-master
+```
+Where to build the binaries
+```sh
+C:\OpenCV\build
+```
+
+#### Click Configure and specify native compilers. For C & C++ compilers browse following.
+```sh
+C:\Program Files (x86)\Microsoft Visual Studio 11.0\Vc\bin\cl.exe
+```
+
+#### Click Finish and wait until Configuring done. 
+
+### Configure opencv_contrib
+
+Look for OPENCV_EXTRA_MODULES_PATH and set it as follows.
+```sh
+C:\OpenCV\sources\opencv_contrib-master\modules
+```
+Then click Configure and wait until it is done.
+
+### Generate
+
+Click Generate and wait for it to finish. When it is done close CMake.
+
+## Build OpenCV
+
+1. Got to:
+
+```sh
+C:\OpenCV\build\
+```
+directory and run "OpenCV.sln" with Visual Studio.
+
+2. Change the Debug mode to Release mode (you'll find it the middle of toolbar). Wait for the projects to get ready. Check if it is written Ready in the bottom left corner of the Visual Studio window.
+
+3. When the projects are ready, Right Click on All_BUILD and select Build (you'll find in the solution explorer on the right of Visual Studio). It will take a while, wait until it finishes.
+
+4. Right Click on INSTALL (right under ALL_BUILD) and select Build. When it finishes close the Visual Studio.
+
+## Copy build files
+
+### Copy cv2.pyc
+
+#### Copy cv2.pyc file from: 
+```sh
+C:\OpenCV\sources\build\Release
+```
+into:
+```sh
+C:\Python27\Lib\site-packages\
+```
+If there is a file with the same name replace it.
+
+### Copy *.dll files
+Copy all the dll files from:
+```sh
+C:\OpenCV\sources\build\Release
+```
+into:
+```sh
+C:\Python27\
+```
+
+## Add Python and OpenCV into PATH
+
+1. Right Click on My Computer and select properties.
+
+2. Go to Advanced system settings (on top left corner) and select Environment Variables (on Advanced tab and at the bottom), and click on Path from the System variables section and click Edit.
+
+3. Add all the following pathes by each time clicking on New
+```sh
+C:\Python27
+C:\Python27\Lib\site-packages
+C:\Python\Scripts
+C:\OpenCV\build\lib\Release
+C:\OpenCV\build\install\x86\vc11\bin
+C:\OpenCV\build\install\x86\vc11\lib
+```
+
+4. Click OK on all setting windows you have opened.
+
+
+## Test OpenCV
+
+Open Command prompt and run the following commands.
+
+1. Run python
+```sh
+python
+```
+2. Python interpreter must be run. To check if you installed OpenCV successfully import cv2 and check its version by following commands in Python interpreter.
+```sh
+import cv2
+cv2.__version__
+```
+You should see '3.2.0'
+
+You can watch the Video Tutorial on <a href="https://www.youtube.com/watch?v=w20YIlcpSi8" target="_blank">How to build and Install OpenCV 3.2 from source for Python on Windows 10</a>
+
+
+
 
 ## In Ubuntu 16.04
 
@@ -158,150 +341,6 @@ cv2.__version__
 The output should be '3.2.0'
 
 
-
-
-# Install OpenCV on Ubuntu 10 Windows
-
-
-## Download and install dependencies
-
-1. Download and install Visual Studio and CMake.
-
-1.1. [Visual Studio 2012](http://go.microsoft.com/?linkid=9816768)<br/> 
-1.2. [CMake](http://www.cmake.org/files/v2.8/cmake-2.8.11.2-win32-x86.exe)<br/>
-
-2. Download and install necessary Python, and Numpy to their default locations.
-
-2.1. [Python 2.7.x](https://www.python.org/ftp/python/2.7.13/python-2.7.13.amd64.msi)<br/>
-2.1. [Numpy](http://sourceforge.net/projects/numpy/files/NumPy/1.7.1/numpy-1.7.1-win32-superpack-python2.7.exe/download)<br/>
-
-
-## Download and extract OpenCV and OpenCV_contrib
-
-Download <a href="https://github.com/opencv/opencv/archive/master.zip" target="_blank">OpenCV</a><br/>
-
-Download <a href="https://github.com/opencv/opencv_contrib/archive/master.zip" target="_blank">OpenCV_contrib</a><br/>
-
-Extract both zip files into:
-```sh
-C:\OpenCV\sources\
-```
-and create a build directory in:
-```sh
-C:\OpenCV\
-```
-
-
-## Configure and Generate
-
-Run CMake as administrator
-
-### Configure OpenCV
-
-#### Browse the source code and build directories as follows.
-
-Where is the source code:
-```sh
-C:\OOpenCV\sources\opencv-master
-```
-Where to build the binaries
-```sh
-C:\OpenCV\build
-```
-
-#### Click Configure and specify native compilers. For C & C++ compilers browse following.
-```sh
-C:\Program Files (x86)\Microsoft Visual Studio 11.0\Vc\bin\cl.exe
-```
-
-#### Click Finish and wait until Configuring done. 
-
-### Configure opencv_contrib
-
-Look for OPENCV_EXTRA_MODULES_PATH and set it as follows.
-```sh
-C:\OpenCV\sources\opencv_contrib-master\modules
-```
-Then click Configure and wait until it is done.
-
-### Generate
-
-Click Generate and wait for it to finish. When it is done close CMake.
-
-## Build OpenCV
-
-1. Got to:
-
-```sh
-C:\OpenCV\build\
-```
-directory and run "OpenCV.sln" with Visual Studio.
-
-2. Change the Debug mode to Release mode (you'll find it the middle of toolbar). Wait for the projects to get ready. Check if it is written Ready in the bottom left corner of the Visual Studio window.
-
-3. When the projects are ready, Right Click on All_BUILD and select Build (you'll find in the solution explorer on the right of Visual Studio). It will take a while, wait until it finishes.
-
-4. Right Click on INSTALL (right under ALL_BUILD) and select Build. When it finishes close the Visual Studio.
-
-## Copy build files
-
-### Copy cv2.pyc
-
-#### Copy cv2.pyc file from: 
-```sh
-C:\OpenCV\sources\build\Release
-```
-into:
-```sh
-C:\Python27\Lib\site-packages\
-```
-If there is a file with the same name replace it.
-
-### Copy *.dll files
-Copy all the dll files from:
-```sh
-C:\OpenCV\sources\build\Release
-```
-into:
-```sh
-C:\Python27\
-```
-
-## Add Python and OpenCV into PATH
-
-1. Right Click on My Computer and select properties.
-
-2. Go to Advanced system settings (on top left corner) and select Environment Variables (on Advanced tab and at the bottom), and click on Path from the System variables section and click Edit.
-
-3. Add all the following pathes by each time clicking on New
-```sh
-C:\Python27
-C:\Python27\Lib\site-packages
-C:\Python\Scripts
-C:\OpenCV\build\lib\Release
-C:\OpenCV\build\install\x86\vc11\bin
-C:\OpenCV\build\install\x86\vc11\lib
-```
-
-4. Click OK on all setting windows you have opened.
-
-
-## Test OpenCV
-
-Open Command prompt and run the following commands.
-
-1. Run python
-```sh
-python
-```
-2. Python interpreter must be run. To check if you installed OpenCV successfully import cv2 and check its version by following commands in Python interpreter.
-```sh
-import cv2
-cv2.__version__
-```
-You should see '3.2.0'
-
-You can watch the Video Tutorial on <a href="https://www.youtube.com/watch?v=w20YIlcpSi8" target="_blank">How to build and Install OpenCV 3.2 from source for Python on Windows 10</a>
 
 
 
